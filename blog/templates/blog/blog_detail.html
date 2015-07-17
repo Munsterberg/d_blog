@@ -12,6 +12,12 @@
   <hr>
   <div id="comments">
     <h3>Comments</h3>
+    <h4>Post a comment</h4>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Submit" class="btn btn-default">
+    </form>
     {% for comment in comments %}
      <p>{{ comment.content }}</p>
      <p>Posted by: <strong>{{ comment.poster }}</strong> on {{ comment.posted_at }}</p>

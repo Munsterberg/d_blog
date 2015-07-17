@@ -1,6 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponseRedirect
 
 from .models import Article, Comment
+from .forms import CommentForm
 
 # Create your views here.
 def blog_list(request):
@@ -10,9 +12,26 @@ def blog_list(request):
   })
 
 def blog_detail(request, pk):
+  if request.method == 'POST':
+    form = CommentForm(request.POST)
+
+    if form.is_valid():
+      comment = form.save(commit=False)
+      comment.article_id = pk
+      comment.save()
+      return redirect('blog_detail')
+    #else:
+      #print(form.errors)
+  else:
+    form = CommentForm()      
+
   article = get_object_or_404(Article, pk=pk)
   comments = Comment.objects.filter(article_id=pk)
   return render(request, 'blog/blog_detail.html', {
     'article': article,
     'comments': comments,
+    'form': form,
   })
+
+
+        
