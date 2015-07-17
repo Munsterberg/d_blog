@@ -9,7 +9,14 @@
     <p>{{ article.content }}</p>
   </div>
 
+  <hr>
   <div id="comments">
+    <h3>Comments</h3>
+    {% for comment in comments %}
+     <p>{{ comment.content }}</p>
+     <p>Posted by: <strong>{{ comment.poster }}</strong> on {{ comment.posted_at }}</p>
+     <br><br>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}
