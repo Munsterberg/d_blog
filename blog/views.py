@@ -12,5 +12,5 @@ def blog_list(request):
 def blog_detail(request, pk):
   article = get_object_or_404(Article, pk=pk)
   return render(request, 'blog/blog_detail.html', {
-    'article': article
+    'article': article,
   })
